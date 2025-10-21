@@ -1,24 +1,29 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* your existing config options */
   typescript: {
     ignoreBuildErrors: true,
   },
-  // 禁用 Next.js 热重载，由 nodemon 处理重编译
+  // Disable React strict mode
   reactStrictMode: false,
   webpack: (config, { dev }) => {
     if (dev) {
-      // 禁用 webpack 的热模块替换
+      // Disable webpack hot module replacement
       config.watchOptions = {
-        ignored: ['**/*'], // 忽略所有文件变化
+        ignored: ["**/*"], // Ignore all file changes (handled by nodemon)
       };
     }
     return config;
   },
   eslint: {
-    // 构建时忽略ESLint错误
+    // Ignore ESLint errors during builds
     ignoreDuringBuilds: true,
+  },
+
+  // ✅ Fix for Next.js dev API origin warning
+  experimental: {
+    allowedDevOrigins: ["http://localhost:3000"],
   },
 };
 
